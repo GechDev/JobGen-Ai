@@ -1,0 +1,1848 @@
+basePath: /api/v1
+definitions:
+  controllers.CVFileRefRequest:
+    properties:
+      fileId:
+        type: string
+    type: object
+  controllers.ChangePasswordRequest:
+    properties:
+      new_password:
+        minLength: 8
+        type: string
+      old_password:
+        type: string
+    required:
+    - new_password
+    - old_password
+    type: object
+  controllers.CreateJobRequest:
+    properties:
+      apply_url:
+        type: string
+      company_name:
+        type: string
+      description:
+        type: string
+      extracted_skills:
+        items:
+          type: string
+        type: array
+      full_description_html:
+        type: string
+      is_sponsorship_available:
+        type: boolean
+      location:
+        type: string
+      salary:
+        type: string
+      source:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+      title:
+        type: string
+    required:
+    - apply_url
+    - company_name
+    - description
+    - location
+    - title
+    type: object
+  controllers.ErrorInfo:
+    properties:
+      code:
+        type: string
+      details: {}
+      message:
+        type: string
+    type: object
+  controllers.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  controllers.RefreshTokenRequest:
+    properties:
+      refresh_token:
+        type: string
+    required:
+    - refresh_token
+    type: object
+  controllers.RegisterRequest:
+    properties:
+      bio:
+        type: string
+      city_region:
+        type: string
+      email:
+        type: string
+      experience_years:
+        type: integer
+      full_name:
+        minLength: 1
+        type: string
+      job_type:
+        allOf:
+        - $ref: '#/definitions/domain.JobType'
+        enum:
+        - full-time
+        - part-time
+        - contract
+        - internship
+        - temporary
+        - remote
+        - hybrid
+        - freelance
+      location:
+        type: string
+      password:
+        minLength: 8
+        type: string
+      phone_number:
+        type: string
+      preferred_country:
+        type: string
+      skills:
+        items:
+          type: string
+        type: array
+      username:
+        maxLength: 30
+        minLength: 3
+        type: string
+    required:
+    - email
+    - full_name
+    - password
+    - username
+    type: object
+  controllers.RequestPasswordResetRequest:
+    properties:
+      email:
+        type: string
+    required:
+    - email
+    type: object
+  controllers.ResendOTPRequest:
+    properties:
+      email:
+        type: string
+      purpose:
+        enum:
+        - EMAIL_VERIFICATION
+        - PASSWORD_RESET
+        type: string
+    required:
+    - email
+    - purpose
+    type: object
+  controllers.ResetPasswordRequest:
+    properties:
+      email:
+        type: string
+      new_password:
+        minLength: 8
+        type: string
+      otp:
+        type: string
+    required:
+    - email
+    - new_password
+    - otp
+    type: object
+  controllers.StandardResponse:
+    properties:
+      data: {}
+      error:
+        $ref: '#/definitions/controllers.ErrorInfo'
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  controllers.UpdateJobRequest:
+    properties:
+      company_name:
+        type: string
+      description:
+        type: string
+      extracted_skills:
+        items:
+          type: string
+        type: array
+      location:
+        type: string
+      title:
+        type: string
+    type: object
+  controllers.UpdateProfileRequest:
+    properties:
+      bio:
+        type: string
+      city_region:
+        type: string
+      experience_years:
+        type: integer
+      full_name:
+        type: string
+      job_type:
+        allOf:
+        - $ref: '#/definitions/domain.JobType'
+        enum:
+        - full-time
+        - part-time
+        - contract
+        - internship
+        - temporary
+        - remote
+        - hybrid
+        - freelance
+      location:
+        type: string
+      phone_number:
+        type: string
+      preferred_country:
+        type: string
+      profile_picture:
+        type: string
+      skills:
+        items:
+          type: string
+        type: array
+    type: object
+  controllers.UpdateUserRoleRequest:
+    properties:
+      role:
+        allOf:
+        - $ref: '#/definitions/domain.Role'
+        enum:
+        - user
+        - admin
+    required:
+    - role
+    type: object
+  controllers.VerifyEmailRequest:
+    properties:
+      email:
+        type: string
+      otp:
+        type: string
+    required:
+    - email
+    - otp
+    type: object
+  domain.CV:
+    properties:
+      createdAt:
+        type: string
+      educations:
+        items:
+          $ref: '#/definitions/domain.Education'
+        type: array
+      experiences:
+        items:
+          $ref: '#/definitions/domain.Experience'
+        type: array
+      fileName:
+        type: string
+      fileStorageId:
+        type: string
+      id:
+        type: string
+      processingError:
+        type: string
+      profileSummary:
+        type: string
+      rawText:
+        type: string
+      score:
+        type: integer
+      skills:
+        items:
+          type: string
+        type: array
+      status:
+        $ref: '#/definitions/domain.JobStatus'
+      suggestions:
+        items:
+          $ref: '#/definitions/domain.Suggestion'
+        type: array
+      updatedAt:
+        type: string
+      userId:
+        type: string
+    type: object
+  domain.ChatRequest:
+    properties:
+      cv_data:
+        $ref: '#/definitions/domain.CV'
+      message:
+        type: string
+      session_id:
+        type: string
+    required:
+    - message
+    type: object
+  domain.ContactFormRequest:
+    properties:
+      email:
+        type: string
+      message:
+        maxLength: 2000
+        minLength: 10
+        type: string
+      name:
+        maxLength: 100
+        minLength: 1
+        type: string
+      subject:
+        maxLength: 200
+        minLength: 3
+        type: string
+    required:
+    - email
+    - message
+    - name
+    - subject
+    type: object
+  domain.Education:
+    properties:
+      degree:
+        type: string
+      graduationDate:
+        type: string
+      id:
+        type: string
+      institution:
+        type: string
+      location:
+        type: string
+    type: object
+  domain.Experience:
+    properties:
+      company:
+        type: string
+      description:
+        type: string
+      endDate:
+        type: string
+      id:
+        type: string
+      location:
+        type: string
+      startDate:
+        type: string
+      title:
+        type: string
+    type: object
+  domain.JobStatus:
+    enum:
+    - Pending
+    - Processing
+    - Completed
+    - Failed
+    type: string
+    x-enum-varnames:
+    - StatusPending
+    - StatusProcessing
+    - StatusCompleted
+    - StatusFailed
+  domain.JobType:
+    enum:
+    - full-time
+    - part-time
+    - contract
+    - internship
+    - temporary
+    - remote
+    - hybrid
+    - freelance
+    type: string
+    x-enum-varnames:
+    - FullTime
+    - PartTime
+    - Contract
+    - Internship
+    - Temporary
+    - Remote
+    - Hybrid
+    - Freelance
+  domain.Role:
+    enum:
+    - user
+    - admin
+    type: string
+    x-enum-varnames:
+    - RoleUser
+    - RoleAdmin
+  domain.Suggestion:
+    properties:
+      applied:
+        type: boolean
+      content:
+        type: string
+      id:
+        type: string
+      type:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@jobgen.io
+    name: JobGen Support
+    url: http://www.jobgen.io/support
+  description: AI-Powered Remote Job Finder & CV Optimizer API
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: http://swagger.io/terms/
+  title: JobGen API
+  version: "1.0"
+paths:
+  /admin/jobs:
+    post:
+      consumes:
+      - application/json
+      description: Create a new job listing (Admin only)
+      parameters:
+      - description: Job details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.CreateJobRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Job created successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Create a new job
+      tags:
+      - Admin
+  /admin/jobs/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a job listing (Admin only)
+      parameters:
+      - description: Job ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Job deleted successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "404":
+          description: Job not found
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete a job
+      tags:
+      - Admin
+    put:
+      consumes:
+      - application/json
+      description: Update an existing job listing (Admin only)
+      parameters:
+      - description: Job ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Job update details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.UpdateJobRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Job updated successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "404":
+          description: Job not found
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Update a job
+      tags:
+      - Admin
+  /admin/jobs/aggregate:
+    post:
+      consumes:
+      - application/json
+      description: Manually trigger job aggregation from all sources (Admin only)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Job aggregation started
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Trigger job aggregation
+      tags:
+      - Admin
+  /admin/users:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of users (admin only)
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Items per page
+        in: query
+        name: limit
+        type: integer
+      - description: Filter by role
+        enum:
+        - user
+        - admin
+        in: query
+        name: role
+        type: string
+      - description: Filter by active status
+        in: query
+        name: active
+        type: boolean
+      - description: Search in email, username, or full name
+        in: query
+        name: search
+        type: string
+      - default: created_at
+        description: Sort field
+        in: query
+        name: sort_by
+        type: string
+      - default: desc
+        description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort_order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of users
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Get users
+      tags:
+      - Admin
+  /admin/users/{user_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a user account (admin only)
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User deleted successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete user
+      tags:
+      - Admin
+  /admin/users/{user_id}/role:
+    put:
+      consumes:
+      - application/json
+      description: Update the role of a user (admin only)
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      - description: Role update details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.UpdateUserRoleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User role updated successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Update user role
+      tags:
+      - Admin
+  /admin/users/{user_id}/toggle-status:
+    put:
+      consumes:
+      - application/json
+      description: Activate or deactivate a user account (admin only)
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User status toggled successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Toggle user status
+      tags:
+      - Admin
+  /auth/change-password:
+    post:
+      consumes:
+      - application/json
+      description: Change the user's password while logged in
+      parameters:
+      - description: Password change details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.ChangePasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Password changed successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Change password
+      tags:
+      - Authentication
+  /auth/forgot-password:
+    post:
+      consumes:
+      - application/json
+      description: Request a password reset OTP to be sent to the user's email
+      parameters:
+      - description: Email address
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.RequestPasswordResetRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      summary: Request password reset (OTP)
+      tags:
+      - Authentication
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate user and return JWT tokens
+      parameters:
+      - description: Login credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Login successful with tokens
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Invalid credentials
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      summary: Login user
+      tags:
+      - Authentication
+  /auth/logout:
+    post:
+      consumes:
+      - application/json
+      description: Logout the current user and invalidate all tokens
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Logged out successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Logout user
+      tags:
+      - Authentication
+  /auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: Refresh the access token using a valid refresh token
+      parameters:
+      - description: Refresh token
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.RefreshTokenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Tokens refreshed successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Invalid or expired refresh token
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      summary: Refresh access token
+      tags:
+      - Authentication
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user account with email verification
+      parameters:
+      - description: Registration details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User registered successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "409":
+          description: User already exists
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      summary: Register a new user
+      tags:
+      - Authentication
+  /auth/resend-otp:
+    post:
+      consumes:
+      - application/json
+      description: Resend the OTP for email verification or password reset
+      parameters:
+      - description: Email and Purpose
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.ResendOTPRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OTP resent successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      summary: Resend OTP
+      tags:
+      - Authentication
+  /auth/reset-password:
+    post:
+      consumes:
+      - application/json
+      description: Reset the user's password using OTP
+      parameters:
+      - description: Password reset details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.ResetPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      summary: Reset password with OTP
+      tags:
+      - Authentication
+  /auth/verify-email:
+    post:
+      consumes:
+      - application/json
+      description: Verify user email with OTP code
+      parameters:
+      - description: Verification details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.VerifyEmailRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Email verified successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request or invalid OTP
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      summary: Verify email address
+      tags:
+      - Authentication
+  /chat/message:
+    post:
+      consumes:
+      - application/json
+      description: Send a message to the AI career assistant and receive a response
+      parameters:
+      - description: Chat message
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/domain.ChatRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Message sent successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Send a message to the AI chatbot
+      tags:
+      - AI Chat
+  /chat/session/{session_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a specific chat session and all its messages
+      parameters:
+      - description: Session ID
+        in: path
+        name: session_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Session deleted successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "404":
+          description: Session not found
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete a chat session
+      tags:
+      - AI Chat
+    get:
+      consumes:
+      - application/json
+      description: Retrieve the message history for a specific chat session
+      parameters:
+      - description: Session ID
+        in: path
+        name: session_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: History retrieved successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "404":
+          description: Session not found
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Get chat session history
+      tags:
+      - AI Chat
+  /chat/sessions:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of the user's chat sessions
+      parameters:
+      - description: Number of results to return (default 10)
+        in: query
+        name: limit
+        type: integer
+      - description: Number of results to skip (default 0)
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Sessions retrieved successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Get user's chat sessions
+      tags:
+      - AI Chat
+  /contact:
+    post:
+      consumes:
+      - application/json
+      description: Allows users to submit general inquiries or feedback
+      parameters:
+      - description: Contact form details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/domain.ContactFormRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Contact form submitted successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request (validation error)
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      summary: Submit a contact form
+      tags:
+      - Public
+  /cv:
+    post:
+      consumes:
+      - multipart/form-data
+      - application/json
+      description: Start a parsing job by uploading a file (multipart) or providing
+        an existing fileId in JSON body.
+      parameters:
+      - description: CV PDF file
+        in: formData
+        name: file
+        type: file
+      - description: Provide when using existing fileId
+        in: body
+        name: request
+        schema:
+          $ref: '#/definitions/controllers.CVFileRefRequest'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Job accepted
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Start CV parsing job (file or reference)
+      tags:
+      - CV
+  /cv/{jobId}:
+    get:
+      description: Fetch the current status and (if finished) the parsed result of
+        a CV parsing job.
+      parameters:
+      - description: Parsing Job ID
+        in: path
+        name: jobId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Job status and result
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: User not authenticated
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "403":
+          description: User not authorized to view this job
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "404":
+          description: Job not found
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Get CV parsing job status
+      tags:
+      - CV
+  /cv/parse:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Upload a CV PDF via multipart and start a parsing job.
+      parameters:
+      - description: CV PDF file
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Job accepted
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Start CV parsing job (multipart)
+      tags:
+      - CV
+  /files/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes a file owned by the authenticated user
+      parameters:
+      - description: File ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: File deleted successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "404":
+          description: File not found
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete a file
+      tags:
+      - Files
+    get:
+      consumes:
+      - application/json
+      description: Generates a presigned URL to download a file owned by the authenticated
+        user
+      parameters:
+      - description: File ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Presigned URL for the file
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "404":
+          description: File not found
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Download a file
+      tags:
+      - Files
+  /files/profile-picture/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Fetch the profile picture presigned URL for a user if it exists
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Presigned URL returned successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "404":
+          description: Profile picture not found
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      summary: Get profile picture
+      tags:
+      - Files
+  /files/profile-picture/me:
+    get:
+      consumes:
+      - application/json
+      description: Fetch the current authenticated user's profile picture presigned
+        URL
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Profile picture URL fetched successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized – user ID not found in context
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "404":
+          description: Profile picture not found
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Get my profile picture
+      tags:
+      - Files
+  /files/upload/document:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Uploads a document for the authenticated user
+      parameters:
+      - description: Document file
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: File uploaded successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Validation error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Upload a document
+      tags:
+      - Files
+  /files/upload/profile:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Uploads a profile picture for the authenticated user
+      parameters:
+      - description: Profile picture file
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: File uploaded successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Validation error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Upload profile picture
+      tags:
+      - Files
+  /jobs:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve jobs with optional filtering by query, skills, location,
+        etc.
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Items per page (max 100)
+        in: query
+        name: limit
+        type: integer
+      - description: Search query for title, company, or description
+        in: query
+        name: query
+        type: string
+      - description: Comma-separated list of skills
+        in: query
+        name: skills
+        type: string
+      - description: Location filter
+        in: query
+        name: location
+        type: string
+      - description: Filter by sponsorship availability
+        in: query
+        name: sponsorship
+        type: boolean
+      - description: Filter by job source
+        in: query
+        name: source
+        type: string
+      - default: posted_at
+        description: Sort field
+        in: query
+        name: sort_by
+        type: string
+      - default: desc
+        description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort_order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of jobs
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      summary: Get all jobs with filtering and pagination
+      tags:
+      - Jobs
+  /jobs/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve detailed information about a specific job
+      parameters:
+      - description: Job ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Job details
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "404":
+          description: Job not found
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      summary: Get a specific job by ID
+      tags:
+      - Jobs
+  /jobs/matched:
+    get:
+      consumes:
+      - application/json
+      description: Get personalized job recommendations based on user profile
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Items per page (max 100)
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Matched jobs for user
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Get matched jobs for authenticated user
+      tags:
+      - Jobs
+  /jobs/search:
+    get:
+      consumes:
+      - application/json
+      description: Search and filter jobs with personalized matching if user is authenticated
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Items per page (max 100)
+        in: query
+        name: limit
+        type: integer
+      - description: Search query for title, company, or description
+        in: query
+        name: query
+        type: string
+      - description: Comma-separated list of skills
+        in: query
+        name: skills
+        type: string
+      - description: Location filter
+        in: query
+        name: location
+        type: string
+      - description: Filter by sponsorship availability
+        in: query
+        name: sponsorship
+        type: boolean
+      - description: Filter by job source
+        in: query
+        name: source
+        type: string
+      - default: posted_at
+        description: Sort field
+        in: query
+        name: sort_by
+        type: string
+      - default: desc
+        description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort_order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Personalized job search results
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Search jobs with user context
+      tags:
+      - Jobs
+  /jobs/search-by-skills:
+    get:
+      consumes:
+      - application/json
+      description: Quick search for jobs based on specific skills
+      parameters:
+      - description: Comma-separated list of skills
+        in: query
+        name: skills
+        required: true
+        type: string
+      - default: 20
+        description: Number of jobs to return (max 50)
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Jobs matching skills
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      summary: Search jobs by skills
+      tags:
+      - Jobs
+  /jobs/sources:
+    get:
+      consumes:
+      - application/json
+      description: Get list of all supported job scraping sources
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of job sources
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      summary: Get supported job sources
+      tags:
+      - Jobs
+  /jobs/stats:
+    get:
+      consumes:
+      - application/json
+      description: Get statistics about jobs in the system
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Job statistics
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      summary: Get job statistics
+      tags:
+      - Jobs
+  /jobs/trending:
+    get:
+      consumes:
+      - application/json
+      description: Get currently trending job listings
+      parameters:
+      - default: 20
+        description: Number of jobs to return (max 50)
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Trending jobs
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      summary: Get trending jobs
+      tags:
+      - Jobs
+  /users/account:
+    delete:
+      consumes:
+      - application/json
+      description: Delete the user's account permanently
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Account deleted successfully
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete account
+      tags:
+      - User Profile
+  /users/profile:
+    get:
+      consumes:
+      - application/json
+      description: Get current user's profile information
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User profile
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Get user profile
+      tags:
+      - User Profile
+    put:
+      consumes:
+      - application/json
+      description: Update current user's profile information
+      parameters:
+      - description: Profile updates
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.UpdateProfileRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Updated user profile
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/controllers.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Update user profile
+      tags:
+      - User Profile
+securityDefinitions:
+  BearerAuth:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
