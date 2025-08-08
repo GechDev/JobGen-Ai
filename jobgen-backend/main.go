@@ -1,3 +1,5 @@
+// JobGen Backend Application
+// Main entry point for the Go backend server
 package main
 
 import (
