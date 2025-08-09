@@ -1,3 +1,5 @@
+// Root layout component for the Next.js application
+// Provides global providers and styling
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
