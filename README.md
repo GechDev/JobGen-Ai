@@ -38,6 +38,24 @@ A comprehensive job search and application platform built with Next.js frontend 
 
 Please read CONTRIBUTING.md for details on our code of conduct and the process for submitting pull requests.
 
-## License
+## API Documentation
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+The API documentation is available via Swagger at `/swagger/index.html` when the backend is running.
+
+## Environment Variables
+
+Create a `.env` file in the backend directory with the following variables:
+
+- `MONGO_URI`: MongoDB connection string
+- `JWT_SECRET`: JWT signing secret
+- `OPENAI_API_KEY`: OpenAI API key for AI features
+- `EMAIL_USER`: Email service username
+- `EMAIL_PASS`: Email service password
+
+## Deployment
+
+The application can be deployed using Docker:
+
+```bash
+docker-compose up -d
+```
