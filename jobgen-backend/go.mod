@@ -1,3 +1,4 @@
+// Go module for JobGen backend
 module jobgen-backend
 
 go 1.24.5
