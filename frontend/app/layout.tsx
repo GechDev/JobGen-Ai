@@ -39,7 +39,7 @@ export default function RootLayout({
             </ThemeProvider>
           </ReduxProvider>
         </NextAuthSessionProvider>
-      </body >
-    </html >
+      </body>
+    </html>
   );
 }
